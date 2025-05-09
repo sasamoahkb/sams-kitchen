@@ -1,0 +1,33 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.nav.navbar-nav a:hover {
+    color: #55dae6!important;
+    transition: background-color 0.5s ease, color 0.5s ease;
+
+}
+
+.navbar-header a:hover {
+    color: #55dae6!important;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.page-header-position {
+    height: 24%;
+    position: relative;
+    top: 15px;
+}
+
+.btn.btn-info.btn-lg.btn-block:hover {
+    color: #181717 !important; /* Change text color */
+    background-color: #46b7dab4 !important; /* Change background */
+    border-color: #46b8da !important;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.btn.btn-info.btn-lg.btn-block {
+    color: #55dae6;
+    background-color: #333;
+    border-color: #46b8da;
+}
