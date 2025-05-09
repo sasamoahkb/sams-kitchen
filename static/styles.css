@@ -30,4 +30,11 @@ html {
     color: #55dae6;
     background-color: #333;
     border-color: #46b8da;
+    
+}
+
+.img {
+    background-color: hsla(185, 91%, 52%, 0.378);
+    border-color: #5bc0de;
+    border-radius: 25px;
 }
