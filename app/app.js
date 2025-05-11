@@ -1,12 +1,14 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
+
 
 // set up static files to be served
 app.use(express.static(path.join(__dirname, "../static")));
 
-// get function for streaming images
+// custom image streamer
 app.get("/images/:file", (req, res) => {
     const filePath = path.join(__dirname, "../static/images", req.params.file);
 
@@ -29,7 +31,7 @@ app.get("/images/:file", (req, res) => {
       res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
 
       // stream file
-      fstat.createReadStream(filePath).pipe(res);
+      fs.createReadStream(filePath).pipe(res);
 });
 
 // Set the views directory
@@ -41,6 +43,5 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`helloworld: listening on port ${PORT}`);
-  console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`API server running at http://localhost:${PORT}`);
 });

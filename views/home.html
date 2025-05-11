@@ -7,11 +7,41 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            animation: fadeInAnimation ease 3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20vh);
+            visibility: hidden;
+            transition: opacity 1200ms ease-out, transform 600ms ease-out,
+              visibility 1200ms ease-out;
+            will-change: opacity, transform, visibility;
+        }
+        
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+            visibility: visible;
+        }
+    </style>
 </head>
 <body class="background" style="background-color:rgb(0, 0, 0);
 background-image: var(--bs-gradient);
-color: rgb(255, 255, 255);
-">
+color: rgb(255, 255, 255);">
+
     <div class="container">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -90,55 +120,61 @@ color: rgb(255, 255, 255);
     color:black">
         <div class="container">
             <h3 style="font-family: fantasy;
-            text-align: center;"><strong>Bringing true, authentic, Mexican and Peruvian dishes to one vientre hambriento at a time!!</strong>
+            text-align: center;">
+            <strong>Bringing true, authentic, Mexican and Peruvian dishes to one vientre hambriento at a time!!</strong>
             </h3>
         </div>
         <div class="container" style="text-align:center; padding: 20px">
-            <button id="#book" type="button" class="btn btn-dark" 
-                style="background-color:black;
-                color: white;
-                font-family: fantasy;
-                text-align: center;
-                ">Book Now!
+            <button id="#book" type="button" class="btn btn-dark" style="background-color:black;
+            color: white;
+            font-family: fantasy;
+            text-align: center;">
+                Book Now!
                 <a href="#" ></a>
             </button>
         </div>
         <div class="container">
-            <h4 style="font-family: fantasy;
+            <h4 style=" font-family: fantasy;
             text-align: center;">Continue scrolling to find out more about our food, our restaurant and its incredible origin story.</h4>
         </div>
-        <div class="card mb-3" style="text-align: center; font-family: fantasy">
-            <img src="/static/images/Cebiche-Peru-1 Small.png" class="card-img-top" alt="..." 
-            style="width: 70vh">
-            <div class="card-body">
-              <h5 class="card-title">Ceviche de pargo rojo</h5>
-              <p class="card-text">One of our house favourites, ceviche. Made by cooking the freshest red snapper fillets in a beautiful Sam's Kitchen lime marinade.</p> 
-              <p>Served with fresh vegetables on the side and best served cold.</p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <section class="fade-in-section">
+            <div class="card mb-3" style="text-align: center; font-family: fantasy">
+                <img src="/static/Cebiche-Peru-1 Small.png" class="card-img-top" alt="..." 
+                style="width: 70vh">
+                <div class="card-body">
+                    <h5 class="card-title">Ceviche de pargo rojo</h5>
+                    <p class="card-text">One of our house favourites, ceviche. Made by cooking the freshest red snapper fillets in a beautiful Sam's Kitchen lime marinade.</p> 
+                    <p>Served with fresh vegetables on the side and best served cold.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>  
             </div>
-        </div>
-        <div class="card mb-3" style="text-align: center; font-family: fantasy">
-            <img src="/static/images/tapas.png" class="card-img-top" alt="..." 
-            style="width: 70vh">
-            <div class="card-body">
-              <h5 class="card-title">Plato del cielo</h5>
-              <p class="card-text">Another of our house favourites, tapas. Easy to eat and even greater to taste.</p> 
-              <p>This heavenly assortment of fresh meats, vegetables, cheeses and other secret ingredients complete 
-                this dish to give it the most incredible flavours.</p>
-              <p>And so this dish earned its name and spot forever in our Kitchen.</p>
-              <p class="card-text"><small class="text-muted">Last updated 15 mins ago</small></p>
+        </section>
+        <section class="fade-in-section">
+            <div class="card mb-3" style="text-align: center; font-family: fantasy">
+                <img src="/static/tapas.png" class="card-img-top" alt="..." 
+                style="width: 70vh">
+                    <div class="card-body">
+                    <h5 class="card-title">Plato del cielo</h5>
+                    <p class="card-text">Another of our house favourites, tapas. Easy to eat and even greater to taste.</p> 
+                    <p>This heavenly assortment of fresh meats, vegetables, cheeses and other secret ingredients complete 
+                        this dish to give it the most incredible flavours.</p>
+                    <p>And so this dish earned its name and spot forever in our Kitchen.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 15 mins ago</small></p>
+                    </div>
             </div>
-        </div>
-        <div class="card mb-3" style="text-align: center; font-family: fantasy">
-            <img src="/static/images/tacos.png" class="card-img-top" alt="..." 
-            style="width: 70vh">
-            <div class="card-body">
-              <h5 class="card-title">Sam's Kitchen Tacos</h5>
-              <p class="card-text">A dish that needs no introduction. Sam's Kitchen only uses the freshest, locally sourced products to create this global favourite.</p> 
-              <p>Critically acclaimed as "a dish embodying the spirit of Mexican tradition".</p>
-              <p class="card-text"><small class="text-muted">Last updated 20 mins ago</small></p>
+        </section>
+        <section class="fade-in-section">
+            <div class="card mb-3" style="text-align: center; font-family: fantasy">
+                <img src="../static/tacos.png" class="card-img-top" alt="..." 
+                style="width: 70vh">
+                    <div class="card-body">
+                        <h5 class="card-title">Sam's Kitchen Tacos</h5>
+                        <p class="card-text">A dish that needs no introduction. Sam's Kitchen only uses the freshest, locally sourced products to create this global favourite.</p> 
+                        <p>Critically acclaimed as "a dish embodying the spirit of Mexican tradition".</p>
+                        <p class="card-text"><small class="text-muted">Last updated 20 mins ago</small></p>
+                    </div>
             </div>
-        </div>
+        </section>
     </div>
 
     <footer class="pt-3 mt-4 text-body-secondary border-top" style="
@@ -148,6 +184,31 @@ color: rgb(255, 255, 255);
       top: 72%; -->
           Sanova Development Ltd | © 2024
     </footer>
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const faders = document.querySelectorAll(".fade-in-section");
+          
+            const observer = new IntersectionObserver(
+              entries => {
+                entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                  } else {
+                    entry.target.classList.remove("is-visible");
+                  }
+                });
+              },
+              {
+                threshold: 0.1, // triggers when 10% of the section is visible
+              }
+            );
+          
+            faders.forEach(section => observer.observe(section));
+          });
+      </script>
+
+
+
+
 </body>
 </html>
