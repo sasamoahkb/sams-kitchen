@@ -86,85 +86,50 @@ color: rgb(255, 255, 255);">
       </div>
     </div>
     <div class="container" style="background-color:rgba(255,241,207);
-    color:black">
+    color:black;
+    padding: 20px;">
         <div class="container">
-            <h3 style="font-family: fantasy;
+            <h2 class="sign-up" style="font-family: fantasy;
             text-align: center;">
-            <strong>Bringing true, authentic, Mexican and Peruvian dishes to one vientre hambriento at a time!!</strong>
-            </h3>
-        </div>
-        <div class="container" style="text-align:center; padding: 20px">
-            <button id="#book" type="button" class="btn btn-dark" style="background-color:black;
-            color: white;
-            font-family: fantasy;
-            text-align: center;">
-                Book Now!
-                <a href="#" ></a>
-            </button>
-        </div>
-        <div class="container">
-            <h4 style=" font-family: fantasy;
-            text-align: center;">Continue scrolling to find out more about our food, our restaurant and its incredible origin story.</h4>
-        </div>
-        <section class="fade-in-section">
-            <div class="card mb-3" style="text-align: center; font-family: fantasy">
-                <img src="/images/Cebiche-Peru-1 Small.png" class="card-img-top" alt="..." 
-                style="width: 70vh">
-                <div class="card-body">
-                    <h4 class="card-title"><strong>Ceviche de pargo rojo</strong></h5>
-                    <p class="card-text">One of our house favourites, ceviche. Made by cooking the freshest red snapper fillets in a beautiful Sam's Kitchen lime marinade.</p> 
-                    <p>Served with fresh vegetables on the side and best served cold.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>  
-            </div>
-        </section>
-        <section class="fade-in-section">
-            <div class="card mb-3" style="text-align: center; font-family: fantasy">
-                <img src="/images/tapas.png" class="card-img-top" alt="..." 
-                style="width: 70vh">
-                    <div class="card-body">
-                    <h4 class="card-title"><strong>Plato del cielo</strong></h4>
-                    <p class="card-text">Another of our house favourites, tapas. Easy to eat and even greater to taste.</p> 
-                    <p>This heavenly assortment of fresh meats, vegetables, cheeses and other secret ingredients complete 
-                        this dish to give it the most incredible flavours.</p>
-                    <p>And so this dish earned its name and spot forever in our Kitchen.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 15 mins ago</small></p>
+            <strong>Don't have an account? Sign up!</strong>
+            </h2>
+            <form action="/signup" method="post" style="font-family: fantasy;">
+                <div class="form-group col-md-6">
+                    <label for="inputfirstname">First name</label>
+                    <input type="text" class="form-control" id="inputfirstname" placeholder="First Name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputlastname">Last name</label>
+                    <input type="text" class="form-control" id="inputlastname" placeholder="Last Name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Password</label>
+                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="text" class="form-control" id="phone_number" placeholder="+44...">
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                        Remember me!
+                    </label>
                     </div>
-            </div>
-        </section>
-        <section class="fade-in-section">
-            <div class="card mb-3" style="text-align: center; font-family: fantasy">
-                <img src="/images/tacos.png" class="card-img-top" alt="..." 
-                style="width: 70vh">
-                    <div class="card-body">
-                        <h4 class="card-title"><strong>Sam's Kitchen Tacos</strong></h4>
-                        <p class="card-text">A dish that needs no introduction. Sam's Kitchen only uses the freshest, locally sourced products to create this global favourite.</p> 
-                        <p>Critically acclaimed as "a dish embodying the spirit of Mexican tradition".</p>
-                        <p class="card-text"><small class="text-muted">Last updated 20 mins ago</small></p>
-                    </div>
-            </div>
-        </section>
-        <section class="fade-in-section">
-            <div class="card mb-3" style="text-align: center; font-family: fantasy">
-                <img src="/images/london.png" class="card-img-top" alt="..." 
-                style="width: 70vh">
-                    <div class="card-body">
-                        <h4 class="card-title"><strong>Sam's Kitchen Tacos</strong></h4>
-                        <p class="card-text">A dish that needs no introduction. Sam's Kitchen only uses the freshest, locally sourced products to create this global favourite.</p> 
-                        <p>Critically acclaimed as "a dish embodying the spirit of Mexican tradition".</p>
-                        <p class="card-text"><small class="text-muted">Last updated 20 mins ago</small></p>
-                    </div>
-            </div>
-        </section>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    <button id="signup-button" type="submit" class="btn btn-primary" style="font-family: fantasy;">Sign up
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <footer class="pt-3 mt-4 text-body-secondary border-top" style="
-      margin: auto;
-      text-align: center;">
-      <!-- position: relative;
-      top: 72%; -->
-          Sanova Development Ltd | © 2024
-    </footer>
-    <script src="/js/fadein.js"></script>
+
 </body>
 </html>

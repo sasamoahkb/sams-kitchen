@@ -7,6 +7,10 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.static('public'));
 
+// Get the functions in the db.js file to use
+const db = require('./src/db')
+
+
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public/html/home.html"));
 }); 
@@ -64,6 +68,16 @@ app.get("/images/:file", (req, res) => {
 
       // stream file
       fs.createReadStream(filePath).pipe(res);
+});
+
+
+
+app.get("/login", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/html/login.html"));
+});
+
+app.get("/signup", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/html/signup.html"));
 });
 
 
