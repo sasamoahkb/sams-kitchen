@@ -1,8 +1,8 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const PORT = process.env.PORT || 3000;
-
+const PORT = process.env.PORT || 3030;
+const { User } = require("./src/Users");
 
 const app = express();
 app.use(express.static('public'));
@@ -75,11 +75,60 @@ app.get("/images/:file", (req, res) => {
 app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "public/html/login.html"));
 });
+app.post("/login", async function(req, res) {
+    console.log("===> login post: ", req.body);
+    params = req.body;
+    var user = new User(params.email);
+    try {
+        var userID = await user.getIDfromEmail();
+        console.log("userID in login post", userID);
+        if(userID) {
+            match = await user.authenticate(params.password);
+            if (match) {
+                console.log("login match check...", req);
+                req.session.uid = userID;
+                req.session.loggedin = true;
+                //check session id in console
+                console.log("Session_ID", req.session.id);
+                res.redirect("/home");
+            
+            }
+            else {
+                alert("invalid password please try again");
+                res.redirect("/login")
+            }
+        } else {
+            res.render("login");
+        }
+    } catch (err) {
+        console.error(`Error while comparing`, err.message);
+    }
+});
+
+
+
 
 app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, "public/html/signup.html"));
 });
-
+app.post("/signup", async function(req, res) {
+    console.log("====> loginPost", req.body);
+    params = req.body;
+    var user = new User(params.email);
+    try {
+        var userID = await user.getIDfromEmail();
+        console.log("userID in login post: ", userID);
+        if(userID) {
+            res.send("User already exists")
+        } else {
+            let result = await user.addUser(params);
+            console.log("Result from post sign up: ", result);
+            res.redirect("/login");
+        }
+    } catch (err) {
+        console.error(`Error while comparing`, err.message);
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
