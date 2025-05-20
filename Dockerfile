@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 # Comments are provided throughout this file to help you get started.
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/go/dockerfile-reference/
@@ -15,8 +13,9 @@ FROM node:latest
 # ENV NODE_ENV production
 
 
-WORKDIR /
-COPY package*.json /app/
+WORKDIR /src
+
+COPY package*.json /src/
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
@@ -33,7 +32,7 @@ RUN npm install -g supervisor && npm install && npm install supervisor
 USER node
 
 # Copy the rest of the source files into the image.
-COPY . .
+COPY . /src
 
 # Expose the port that the application listens on.
 EXPOSE 3030

@@ -6,9 +6,18 @@ const { User } = require("./src/Users");
 
 const app = express();
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
+// var session = require('express-session');
+// app.use(session({
+//     secret: 'secretkeysdfjsflyoifasd',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false }
+//   }));
+  
 // Get the functions in the db.js file to use
-const db = require('./src/db')
+// const db = require('./src/db')
 
 
 app.get("/", (req, res) => {
@@ -112,12 +121,12 @@ app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, "public/html/signup.html"));
 });
 app.post("/signup", async function(req, res) {
-    console.log("====> loginPost", req.body);
+    console.log("====> signupPost", req.body);
     params = req.body;
     var user = new User(params.email);
     try {
         var userID = await user.getIDfromEmail();
-        console.log("userID in login post: ", userID);
+        console.log("userID in signup post: ", userID);
         if(userID) {
             res.send("User already exists")
         } else {

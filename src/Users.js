@@ -25,7 +25,7 @@ class User {
 
     // Check database to see if this user already exists
     async getIDfromEmail() {
-        var sql = "SELECT id FROM Users WHERE users.email = ?";
+        var sql = "SELECT user_id FROM users WHERE users.email = ?";
         const result = await db.query(sql, [this.email]);
         console.log("RESULTS FROM getIDfromEmail", result);
         // Error checks
@@ -43,7 +43,7 @@ class User {
         const pw = await bcrypt.hash(password, 10);
         console.log("user password set: ", pw);
         // Post the new password to the database
-        var sql = "UPDATE Users SET password = ? WHERE Users.id = ?"
+        var sql = "UPDATE users SET password = ? WHERE Users.id = ?"
         const result = await db.query(sql, [pw, this.id]);
         console.log("Result from password setUserPassword", result)
         return true;
@@ -52,16 +52,27 @@ class User {
     async addUser(params) {
         const pw = await bcrypt.hash(params.password, 10);
         console.log("Password in addUser :", pw);
-        var sql = "INSERT INTO users (firstname, lastname, email, phone_number, password) VALUES (?, ?, ?, ?, ?)";
-        const result = await db.query(sql, [params.firstname, params.lastname, this.email, params.phone_number, pw]);
+    
+        const sql = "INSERT INTO users (firstname, lastname, email, password, phone_number) VALUES (?, ?, ?, ?, ?)";
+    
+        // Replace undefined values with null to avoid MySQL errors
+        const values = [
+            params.firstname,
+            params.lastname,
+            params.email,          
+            pw,
+            params.phone_number || null
+        ];
+    
+        const result = await db.query(sql, values);
         console.log("Result from addUser: ", result);
+    
         return true;
-
     }
-
+    
     async authenticate(password) {
         //compare the stored hash password of the user with the hash of the current password input
-        var sql = "SELECT password FROM Users WHERE id = ?";
+        var sql = "SELECT password FROM users WHERE id = ?";
         const result = db.query(sql, [this.id]);
         console.log("Result from authenticate", result);
         const match = await bcrypt.compare(password, result[0].password);

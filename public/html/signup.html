@@ -93,40 +93,41 @@ color: rgb(255, 255, 255);">
             text-align: center;">
             <strong>Don't have an account? Sign up!</strong>
             </h2>
-            <form action="/signup" method="post" style="font-family: fantasy;">
+            <form action="/signup" method="POST" style="font-family: fantasy;">
                 <div class="form-group col-md-6">
                     <label for="inputfirstname">First name</label>
-                    <input type="text" class="form-control" id="inputfirstname" placeholder="First Name" required>
+                    <input type="text" class="form-control" id="inputfirstname" name="firstName" placeholder="First Name" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputlastname">Last name</label>
-                    <input type="text" class="form-control" id="inputlastname" placeholder="Last Name" required>
+                    <input type="text" class="form-control" id="inputlastname" name="lastName" placeholder="Last Name" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+                    <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="Email" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">Password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password" required>
+                    <input type="password" class="form-control" id="inputPassword4" name="password" placeholder="Password" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="phone_number">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_number" placeholder="+44...">
+                    <input type="text" class="form-control" id="phone_number" name="phoneNumber" placeholder="+44...">
                 </div>
                 <div class="form-group">
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Remember me!
-                    </label>
+                        <input class="form-check-input" type="checkbox" id="gridCheck" name="remember">
+                        <label class="form-check-label" for="gridCheck">
+                            Remember me!
+                        </label>
                     </div>
                 </div>
                 <div class="form-group" style="text-align: center;">
-                    <button id="signup-button" type="submit" class="btn btn-primary" style="font-family: fantasy;">Sign up
+                    <button id="signup-button" type="submit" class="btn btn-primary" style="font-family: fantasy;">
+                        Sign up
                     </button>
                 </div>
-            </form>
+            </form>            
         </div>
     </div>
 

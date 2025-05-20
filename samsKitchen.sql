@@ -55,7 +55,7 @@ CREATE TABLE `stores` (
 
 CREATE TABLE `users` (
   `user_id` int NOT NULL,
-  `first name` varchar(50) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
