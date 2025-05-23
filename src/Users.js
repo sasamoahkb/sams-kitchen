@@ -50,8 +50,18 @@ class User {
     }
 
     async addUser(params) {
+        if (!params.firstname || !params.lastname || !params.email || !params.password) {
+            throw new Error("Missing required user fields");
+        }
+
         const pw = await bcrypt.hash(params.password, 10);
-        console.log("Password in addUser :", pw);
+        console.log("Inserting user with:", {
+            firstname: params.firstname,
+            lastname: params.lastname,
+            email: params.email,
+            phone: params.phone_number,
+          });
+          console.log("Password in addUser :", pw);
     
         const sql = "INSERT INTO users (firstname, lastname, email, password, phone_number) VALUES (?, ?, ?, ?, ?)";
     
@@ -61,7 +71,7 @@ class User {
             params.lastname,
             params.email,          
             pw,
-            params.phone_number || null
+            params.phone_number ?? null
         ];
     
         const result = await db.query(sql, values);

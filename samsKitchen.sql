@@ -59,7 +59,7 @@ CREATE TABLE `users` (
   `lastname` varchar(50) NOT NULL,
   `email` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
-  `phone_number` int DEFAULT NULL,
+  `phone_number` varchar(50) DEFAULT NULL,
   `date_created` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

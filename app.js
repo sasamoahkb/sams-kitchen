@@ -8,13 +8,13 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-// var session = require('express-session');
-// app.use(session({
-//     secret: 'secretkeysdfjsflyoifasd',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false }
-//   }));
+const session = require('express-session');
+app.use(session({
+    secret: 'secretkeysdfjsflyoifasd',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }));
   
 // Get the functions in the db.js file to use
 // const db = require('./src/db')
@@ -86,34 +86,32 @@ app.get("/login", (req, res) => {
 });
 app.post("/login", async function(req, res) {
     console.log("===> login post: ", req.body);
-    params = req.body;
-    var user = new User(params.email);
+    const params = req.body;
+    const user = new User(params.email);
+
     try {
-        var userID = await user.getIDfromEmail();
+        const userID = await user.getIDfromEmail();
         console.log("userID in login post", userID);
-        if(userID) {
-            match = await user.authenticate(params.password);
+
+        if (userID) {
+            const match = await user.authenticate(params.password);
             if (match) {
                 console.log("login match check...", req);
                 req.session.uid = userID;
                 req.session.loggedin = true;
-                //check session id in console
                 console.log("Session_ID", req.session.id);
-                res.redirect("/home");
-            
-            }
-            else {
-                alert("invalid password please try again");
-                res.redirect("/login")
+                return res.redirect("/");
+            } else {
+                return res.render("login", { error: "Invalid password. Please try again." });
             }
         } else {
-            res.render("login");
+            return res.render("login", { error: "User not found." });
         }
     } catch (err) {
-        console.error(`Error while comparing`, err.message);
+        console.error("Error while logging in:", err.message);
+        return res.status(500).render("login", { error: "An internal error occurred. Please try again later." });
     }
 });
-
 
 
 
