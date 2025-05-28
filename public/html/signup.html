@@ -93,7 +93,7 @@ color: rgb(255, 255, 255);">
             text-align: center;">
             <strong>Don't have an account? Sign up!</strong>
             </h2>
-            <form action="/signup" method="POST" style="font-family: fantasy;">
+            <form id="signup-form", action="/signup" method="POST" style="font-family: fantasy;">
                 <div class="form-group col-md-6">
                     <label for="inputfirstname">First name</label>
                     <input type="text" class="form-control" id="inputfirstname" name="firstname" placeholder="First Name" required>
@@ -130,6 +130,51 @@ color: rgb(255, 255, 255);">
             </form>            
         </div>
     </div>
+    <!-- Script for dynamically processing errors on the client side-->
+    <!-- <script>
+        document.getElementById("signup-form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.email.value;
+            const password = form.password.value;
+
+            const response = await fetch("/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({ firstname, lastname, email, password })
+            });
+
+            const errorBox = document.getElementById("error-message");
+
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                const data = await response.json();
+                errorBox.textContent = data.error || "Unknown error.";
+                errorBox.style.display = "block";
+            }
+        });
+    </script>
+ -->
+
+
+    <!-- signup.html -->
+    <!-- <div id="errorBox" style="color:red;"></div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get("error");
+
+        if (error === "invalidpassword") {
+            document.getElementById("errorBox").textContent = "Invalid password. Please try again.";
+        } else if (error === "usernotfound") {
+            document.getElementById("errorBox").textContent = "User not found.";
+        } else if (error === "servererror") {
+            document.getElementById("errorBox").textContent = "Internal server error. Please try again.";
+        }
+    </script> -->
 
 
 </body>

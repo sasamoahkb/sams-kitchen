@@ -3,23 +3,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Sam's Kitchen</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body class="background" style="background-color:rgb(0, 0, 0);
-background-image: var(--bs-gradient);
-color: rgb(255, 255, 255);">
+<body class="background" style="background-color:rgb(0, 0, 0); background-image: var(--bs-gradient); color: rgb(255, 255, 255);">
 
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>                        
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span></a>
             </div>
@@ -28,7 +27,7 @@ color: rgb(255, 255, 255);">
                     <li><a href="starters">Appetisers</a></li>
                     <li><a href="mains">Mains</a></li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="drinks">Drinks<span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Drinks<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="alcohol">Bebidas Alcohólicas</a></li>
                             <li><a href="mocktails">Cócteles sin alcohol y Refrescos</a></li>
@@ -36,12 +35,10 @@ color: rgb(255, 255, 255);">
                     </li>
                     <li><a href="deserts">Desserts</a></li>
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
-
                 <ul class="nav navbar-nav" style="
                 float: right !important;
                 width: auto;
@@ -72,59 +69,50 @@ color: rgb(255, 255, 255);">
                     </li>
                 </ul>
             </div>
-            </div>
-        </nav>
-    </div>
-    <div class="page-header-position" style="
-      height: 20%;
-      position: relative;
-      top: 25px;">
-      <div class="container-fluid" style="padding: 10px; text-align:center">
-        <div class="page-header">
-          <h1 style="font-family: Brush Script MT;">Welcome to Sam's Kitchen</h1>
         </div>
-      </div>
-    </div>
-    <div class="container" style="background-color:rgba(255,241,207);
-    color:black">
-        <div class="container">
-            <h2 class="sign-up" style="font-family: fantasy;
-            text-align: center;">
-            <strong>Already have an account? Sign in!</strong>
-            </h2>
-            <form action="/login" method="POST" style="font-family: fantasy;">
+    </nav>
+
+    <!-- Page Header -->
+    <header class="container" style="padding-top: 70px; text-align:center">
+        <div class="page-header">
+            <h1 style="font-family: 'Brush Script MT', cursive;">Welcome to Sam's Kitchen</h1>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <main class="container" style="background-color:rgba(255,241,207); color:black; padding: 30px; border-radius: 8px;">
+        <h2 class="text-center" style="font-family: fantasy;"><strong>Already have an account? Sign in!</strong></h2>
+        <form id="login-form" action="/login" method="POST" style="font-family: fantasy;">
+            <div class="row">
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+                    <input type="email" name="email" class="form-control" id="inputEmail4" placeholder="Email" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">Password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password" required>
+                    <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password" required>
                 </div>
-                <div class="form-group">
-                    <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Remember me!
-                    </label>
-                    </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="gridCheck"> Remember me!</label>
                 </div>
-                <div id="error-message" style="padding: 10px; background-color: #ffdddd; color: #a94442; border: 1px solid #a94442; border-radius: 4px; display: none;"></div>
-                <div class="form-group" style="text-align: center;">
-                    <button id="login-button" type="submit" class="btn btn-primary" style="font-family: fantasy;">Sign in
-                        <a href="/"></a>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
+            <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+            <div class="form-group text-center">
+                <button id="login-button" type="submit" class="btn btn-primary" style="font-family: fantasy;">Sign in</button>
+            </div>
+        </form>
+    </main>
 
+    <!-- Script for dynamically processing errors on the client side-->
     <script>
         document.getElementById("login-form").addEventListener("submit", async function (e) {
             e.preventDefault();
             const form = e.target;
             const email = form.email.value;
             const password = form.password.value;
+
             const response = await fetch("/login", {
                 method: "POST",
                 headers: {
@@ -144,6 +132,21 @@ color: rgb(255, 255, 255);">
                 errorBox.style.display = "block";
             }
         });
+    </script>
+    
+    <!-- login.html -->
+    <div id="errorBox" style="color:red;"></div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get("error");
+
+        if (error === "invalidpassword") {
+            document.getElementById("errorBox").textContent = "Invalid password. Please try again.";
+        } else if (error === "usernotfound") {
+            document.getElementById("errorBox").textContent = "User not found.";
+        } else if (error === "servererror") {
+            document.getElementById("errorBox").textContent = "Internal server error. Please try again.";
+        }
     </script>
 
 </body>

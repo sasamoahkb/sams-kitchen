@@ -1,51 +1,38 @@
-// Initialise functions in db.js file
-const db = require("./db");
-
-// Initialise framework for encryption
+const db = require('./db');
 const bcrypt = require("bcryptjs");
 
-// create the a class for the user
-
 class User {
-
-    // id of user
     id;
-
-    // email of user
     email;
 
-    // specify constructor for email of the user
     constructor(email) {
-        console.log("", email)
         this.email = email;
-        console.log(this.email)
     }
 
-
-
-    // Check database to see if this user already exists
     async getIDfromEmail() {
-        var sql = "SELECT user_id FROM users WHERE users.email = ?";
+        const sql = "SELECT user_id FROM users WHERE email = ?";
         const result = await db.query(sql, [this.email]);
-        console.log("RESULTS FROM getIDfromEmail", result);
-        // Error checks
-        // Check the returned array is not empty
-        if (JSON.stringify(result) != '[]') {
-            this.id = result[0].id;
+        if (result.length > 0) {
+            this.id = result[0].user_id;
             return this.id;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
+    async authenticate(inputPassword) {
+        if (!this.id) throw new Error("User ID not set. Call getIDfromEmail() first.");
+        const sql = "SELECT password FROM users WHERE user_id = ?";
+        const result = await db.query(sql, [this.id]);
+        if (result.length === 0) return false;
+        const match = await bcrypt.compare(inputPassword, result[0].password);
+        return match;
+    }
+
     async setUserPassword(password) {
         const pw = await bcrypt.hash(password, 10);
-        console.log("user password set: ", pw);
-        // Post the new password to the database
-        var sql = "UPDATE users SET password = ? WHERE Users.id = ?"
-        const result = await db.query(sql, [pw, this.id]);
-        console.log("Result from password setUserPassword", result)
+        const sql = "UPDATE users SET password = ? WHERE user_id = ?";
+        await db.query(sql, [pw, this.id]);
         return true;
     }
 
@@ -55,47 +42,19 @@ class User {
         }
 
         const pw = await bcrypt.hash(params.password, 10);
-        console.log("Inserting user with:", {
-            firstname: params.firstname,
-            lastname: params.lastname,
-            email: params.email,
-            phone: params.phone_number,
-          });
-          console.log("Password in addUser :", pw);
-    
         const sql = "INSERT INTO users (firstname, lastname, email, password, phone_number) VALUES (?, ?, ?, ?, ?)";
-    
-        // Replace undefined values with null to avoid MySQL errors
         const values = [
             params.firstname,
             params.lastname,
-            params.email,          
+            params.email,
             pw,
             params.phone_number ?? null
         ];
-    
-        const result = await db.query(sql, values);
-        console.log("Result from addUser: ", result);
-    
+        await db.query(sql, values);
         return true;
     }
-    
-    async authenticate(password) {
-        //compare the stored hash password of the user with the hash of the current password input
-        var sql = "SELECT password FROM users WHERE id = ?";
-        const result = db.query(sql, [this.id]);
-        console.log("Result from authenticate", result);
-        const match = await bcrypt.compare(password, result[0].password);
-        if (match == true) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
 }
 
 module.exports = {
     User
-}
+};
