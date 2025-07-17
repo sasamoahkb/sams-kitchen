@@ -6,7 +6,7 @@
 
 # ARG NODE_VERSION=23.7.0
 
-FROM node:latest
+FROM node:23.7.0
 # ${NODE_VERSION}-alpine
 
 # Use production node environment by default.
