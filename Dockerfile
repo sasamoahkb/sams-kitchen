@@ -7,10 +7,10 @@ WORKDIR /src
 COPY package*.json ./
 
 # Install dependencies (production only)
-RUN npm ci --omit=dev
+# RUN npm ci --omit=deV
 
 # Optional: install supervisor if needed
-RUN npm install -g supervisor
+RUN npm install
 
 # Copy the rest of your app code
 COPY . .
