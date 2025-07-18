@@ -1,4 +1,5 @@
-const express = require("express");
+var express = require("express");
+var escapeHtml = require("escape-html");
 const path = require("path");
 const fs = require("fs");
 const PORT = process.env.PORT || 3030;
@@ -7,15 +8,15 @@ const { User } = require("./src/Users");
 const app = express();
 app.use(express.static('public'));
 app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
-const session = require("express-session");
-
+var session = require("express-session");
+app.set("trust proxy", 1); // trust first proxy
 app.use(session({
   secret: 'secretkeysdfjsflyoifasd',
   resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false }
+  saveUninitialized: true,
+  cookie: { secure: process.env.NODE_ENV === 'production' }
 }));
 
 // Get the functions in the db.js file to use
@@ -58,7 +59,7 @@ function requireAuth(req, res, next) {
     if (req.session.loggedin) {
       next();
     } else {
-      res.redirect("/login");
+        return res.redirect("/login");
     }
   }
   
@@ -128,10 +129,9 @@ app.post("/login", async function (req, res) {
             const match = await user.authenticate(params.password);
             if (match) {
                 req.session.uid = userID;
-                req.session.loggedin = true;
                 console.log("Session_UID", req.session.uid);
                 console.log("Session_ID", req.session.id);
-                return res.redirect(`/dashboard/${userID}`);
+                return res.redirect(`/dashboard/${req.session.uid}`);
             } else {
                 return res.redirect("/login?error=invalidpassword");
             }
