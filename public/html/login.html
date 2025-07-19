@@ -10,6 +10,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body class="background" style="background-color:rgb(0, 0, 0); background-image: var(--bs-gradient); color: rgb(255, 255, 255);">
+    <!-- Error message display -->
+    <div id="message" style="color: red; font-weight: bold;"></div>
 
     <!-- Navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -105,49 +107,41 @@
         </form>
     </main>
 
-    <!-- Script for dynamically processing errors on the client side-->
-    <script>
-        document.getElementById("login-form").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            const form = e.target;
-            const email = form.email.value;
-            const password = form.password.value;
-
-            const response = await fetch("/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({ email, password })
-            });
-
-            const errorBox = document.getElementById("error-message");
-
-            if (response.redirected) {
-                window.location.href = response.url;
-            } else {
-                const data = await response.json();
-                errorBox.textContent = data.error || "Unknown error.";
-                errorBox.style.display = "block";
-            }
-        });
-    </script>
-    
     <!-- login.html -->
-    <div id="errorBox" style="color:red;"></div>
+    <div id="message" style="color: red;"></div>
+
     <script>
         const params = new URLSearchParams(window.location.search);
-        const error = params.get("error");
+        const messageBox = document.getElementById("message");
 
-        if (error === "invalidpassword") {
-            document.getElementById("errorBox").textContent = "Invalid password. Please try again.";
-        } else if (error === "usernotfound") {
-            document.getElementById("errorBox").textContent = "User not found.";
-        } else if (error === "servererror") {
-            document.getElementById("errorBox").textContent = "Internal server error. Please try again.";
+        const errorMap = {
+            "invalidpassword": "Incorrect password. Please try again.",
+            "usernotfound": "No account found with that email.",
+            "servererror": "Server error. Please try again later.",
+            "userexists": "An account with that email already exists.",
+        };
+
+        // Handle error messages
+        const error = params.get("error");
+        if (error) {
+            messageBox.textContent = errorMap[error] || "An unknown error occurred.";
+            messageBox.style.color = "red";
+        }
+
+        // Handle success messages
+        const success = params.get("success");
+        if (success) {
+            messageBox.textContent = success;
+            messageBox.style.color = "green";
         }
     </script>
+
+    <footer class="container text-center" style="padding: 20px; background-color: rgba(0, 0, 0, 0.8); color: white;">
+        <p>&copy; 2023 Sam's Kitchen. All rights reserved.</p>
+        <p>Follow us on 
+            <a href="https://www.instagram.com/samskitchen45/" target="_blank" rel="noopener">Instagram</a>
+        </p>
+    </footer>
 
 </body>
 </html>
