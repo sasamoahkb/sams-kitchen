@@ -1,5 +1,6 @@
 var express = require("express");
-var escapeHtml = require("escape-html");
+const RedisStore = require("connect-redis").default;
+const { createClient } = require("redis");
 const path = require("path");
 const fs = require("fs");
 const PORT = process.env.PORT || 3030;
@@ -12,14 +13,38 @@ app.use(express.urlencoded({ extended: false }));
 
 var session = require("express-session");
 app.set("trust proxy", 1); // trust first proxy
+
+// Redis client setup
+const redisClient = createClient({
+    url: process.env.REDIS_URL || "redis://localhost:6379"
+});
+redisClient.connect().catch(console.error);
+
 app.use(session({
   secret: 'secretkeysdfjsflyoifasd',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === 'production',
+  saveUninitialized: false,
+  store: new session.RedisStore({ client: redisClient }),
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 1000 * 60 * 60 // 1 hour
-   }
+  }
 }));
+
+app.use((req, res, next) => {
+  const now = Date.now();
+  const maxIdleTime = 15 * 60 * 1000; // 15 min
+
+  if (req.session.lastActivity && (now - req.session.lastActivity > maxIdleTime)) {
+    req.session.destroy(err => {
+      if (err) console.error("Idle timeout destroy failed:", err);
+      return res.redirect("/login?error=sessionexpired");
+    });
+  } else {
+    req.session.lastActivity = now;
+    next();
+  }
+});
 
 // Get the functions in the db.js file to use
 // const db = require('./src/db')
@@ -122,27 +147,39 @@ app.post("/login", async function (req, res, next) {
     }
 });
 
-
 function requireAuth(req, res, next) {
-    if (req.session.uid) {
-      next();
+    if (req.session.uid === req.params.userID) {
+        next();
     } else {
-        return res.redirect("/login?success=Welcome+back+to+Sams+Kitchen");
+        req.session.destroy(err => {
+            if (err) {
+                console.error("Failed to destroy session:", err);
+            }
+            return res.redirect("/login?error=sessionexpired");
+        });
     }
-  }
+}
+
+
   
-  app.get("/dashboard", requireAuth, (req, res) => {
-    if (req.session.uid == req.params.userId) {
+app.get("/dashboard/:userID", requireAuth, (req, res) => {
+    if (req.session.uid == req.params.userID) {
       res.sendFile(path.join(__dirname, "public/html/dashboard.html"));
     } else {
       res.status(403).sendFile(path.join(__dirname, "public/html/403.html"));
 
     }
-  });
+});
   
 app.get("/check-session", (req, res) => {
+    if (!req.session) return res.status(401).send("Session not available.");
+
     req.session.views = (req.session.views || 0) + 1;
-    res.send(`Views: ${req.session.views}, UID: ${req.session.uid}`);
+    res.json({
+        message: "Session active",
+        views: req.session.views,
+        uid: req.session.uid
+    });
 });
 
 app.get("/logout", (req, res) => {

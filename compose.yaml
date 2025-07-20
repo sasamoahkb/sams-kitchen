@@ -14,11 +14,13 @@ services:
     volumes: 
       - .:/src
     environment:
-      NODE_ENV: production
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
     ports:
       - 3030:3030
-    # depends_on:
-    #   db:
+    depends_on:
+      - db
+      - redis
     #     condition: service_healthy
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
@@ -35,7 +37,7 @@ services:
     volumes:
       - ./db:/var/lib/mysql
     ports:
-      - "3308:3308"
+      - "3308:3306"
     # expose:
     #   - 5432
     # healthcheck:
@@ -53,7 +55,13 @@ services:
       - ./.env
     ports:
       - "8081:80"
-
+  
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
 # volumes:
 #   db-data:
 # secrets:
