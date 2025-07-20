@@ -10,8 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body class="background" style="background-color:rgb(0, 0, 0); background-image: var(--bs-gradient); color: rgb(255, 255, 255);">
-    <!-- Error message display -->
-    <div id="message" style="color: red; font-weight: bold;"></div>
+    
 
     <!-- Navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -130,8 +129,8 @@
 
         // Handle success messages
         const success = params.get("success");
-        if (success) {
-            messageBox.textContent = success;
+        if (success === "accountcreated") {
+            messageBox.textContent = "User created successfully. Please log in.";
             messageBox.style.color = "green";
         }
     </script>

@@ -162,20 +162,46 @@ app.get("/signup", (req, res) => {
 app.post("/signup", async function (req, res) {
     console.log("====> signupPost", req.body);
     const params = req.body;
-    const user = new User(params.email);
+    const email = params.email ? params.email.trim() : "";
+    const password = params.password ? params.password.trim() : "";
+
+    const user = new User(email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     try {
+        // Check if email is provided
+        if (!emailRegex.test(email)) {
+            console.log("Invalid email format");
+            return res.redirect("/signup?error=invalidemail");
+        }
+        // Check if password is provided
+        if (!password || password === "") {
+            console.log("no password provided");
+            return res.redirect("/signup?error=nopassword");
+        }
+        // Check if password meets strong criteria
+        if (!strongPasswordRegex.test(password)) {
+            console.log("Weak password");
+            return res.redirect("/signup?error=weakpassword");
+        }
+        
         const userID = await user.getIDfromEmail();
         console.log("userID in signup post: ", userID);
+        
+        // Check if user already exists
         if (userID) {
             console.log('user already exists');
-            return res.redirect("/login?error=userexists");
-        } else {
-            const result = await user.addUser(params);
-            console.log("Result from post sign up: ", result);
-            return res.redirect("/login=success=User+created+successfully");
-
+            return res.redirect("/signup?error=userexists");
         }
+        
+        // Add user to the database
+        console.log("Adding user with params: ", params);
+        const result = await user.addUser(params);
+        console.log("Result from post sign up: ", result);
+        return res.redirect("/login?success=accountcreated");
+        
+
     } catch (err) {
         console.error("Error while signing up:", err.message);
         return res.redirect("/signup?error=servererror");
